@@ -1,6 +1,7 @@
 const express = require('express');
 const { message } = require('statuses');
 const app = express();
+const app = express;
 const PORT = 3000;
 
 app.use(express.json());
