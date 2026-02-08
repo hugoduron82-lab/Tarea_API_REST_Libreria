@@ -1,4 +1,6 @@
 const express = require('express');
+const { message } = require('statuses');
+const app = express();
 const app = express;
 const PORT = 3000;
 
@@ -42,6 +44,10 @@ let libros = [
                 }
             ]
 
+
+app.get('/libros',(req,res)=>{
+    res.status(200).json({status:200,message:'Success',data: libros});
+})
 
 app.listen(PORT, ()=>{
     console.log(`El servidor esta escuchando en http://localhost:${PORT}`);
