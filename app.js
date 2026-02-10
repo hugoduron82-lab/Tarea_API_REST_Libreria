@@ -48,7 +48,46 @@ app.get('/libros',(req,res)=>{
     res.status(200).json({status:200,message:'Success',data: libros});
 })
 
+//GET - obtener un libro por id 
+app.get('/libros/:id', (req, res) => {
+    const id = parseInt(req.params.id);
+
+    const libro = libros.find(l => l.id === id);
+
+    if (!libro) {
+        return res.status(404).json({ message: 'Libro no encontrado' });
+    }
+
+    res.status(200).json({ status: 200, message: 'Success', data: libro });
+});
+
+
 // PUT - Actualizar un libro
+
+app.post('/libros', (req, res) => {
+    const { titulo, autor, genero, anioPublicacion } = req.body;
+
+    if (!titulo || !autor || !genero || !anioPublicacion) {
+        return res.status(400).json({ message: 'Todos los campos son obligatorios' });
+    }
+
+    const nuevoLibro = {
+        id: libros.length + 1,
+        titulo,
+        autor,
+        genero,
+        anioPublicacion
+    };
+
+    libros.push(nuevoLibro);
+
+    res.status(201).json({
+        message: 'Libro agregado correctamente',
+        data: nuevoLibro
+    });
+});
+
+// Post Agregar un nuevo libro
 app.put('/libros/:id', (req, res) => {
     const id = parseInt(req.params.id);
     const { titulo, autor, genero, anioPublicacion } = req.body;
